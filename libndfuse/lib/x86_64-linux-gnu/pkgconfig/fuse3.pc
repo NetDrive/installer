@@ -1,0 +1,10 @@
+prefix=/home/bdrive/work/libraries/libfuse3/build/out
+libdir=${prefix}/lib/x86_64-linux-gnu
+includedir=${prefix}/include
+
+Name: fuse3
+Description: Filesystem in Userspace
+Version: 3.2.6
+Libs: -L${libdir} -lfuse3 -lpthread
+Libs.private: -ldl -pthread -lrt
+Cflags:-I${includedir}/fuse3
