@@ -120,9 +120,9 @@ setup_libfuse() {
 
 setup_netdrive() {
 	if command_exists wget; then
-		wget -O NetDrive.AppImage https://www.netdrive.net/download/linux/
+		wget -O NetDrive.AppImage "https://www.netdrive.net/download/linux/?beta"
 	elif command_exists curl; then
-		curl -o NetDrive.AppImage -L https://www.netdrive.net/download/linux/
+		curl -o NetDrive.AppImage -L "https://www.netdrive.net/download/linux/?beta"
 	else
 		echo "curl or wget is required to download NetDrive."
 		return 1
