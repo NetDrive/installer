@@ -13,11 +13,11 @@ NetDrive is installed by running one of the following commands in your terminal.
 #### via curl
 
 ```shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/NetDrive/installer/master/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/NetDrive/installer/master/install.sh)"
 ```
 
 #### via wget
 
 ```shell
-sh -c "$(wget -O- https://raw.githubusercontent.com/NetDrive/installer/master/install.sh)"
+bash -c "$(wget -O- https://raw.githubusercontent.com/NetDrive/installer/master/install.sh)"
 ```
