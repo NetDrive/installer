@@ -113,8 +113,8 @@ setup_fuse() {
 setup_libfuse() {
 	sudo mkdir -p /usr/local/bin/
 	sudo mkdir -p /usr/local/sbin/
-	sudo cp -f ${NETDRIVE}/${INSTALLER}/libndfuse/bin/fusermount3 /usr/local/bin/fusermount3
-	sudo cp -f ${NETDRIVE}/${INSTALLER}/libndfuse/sbin/mount.fuse3 /usr/local/sbin/mount.fuse3
+	sudo cp -f ${NETDRIVE}/${INSTALLER}/libndfuse/util/fusermount3 /usr/local/bin/fusermount3
+	sudo cp -f ${NETDRIVE}/${INSTALLER}/libndfuse/util/mount.fuse3 /usr/local/sbin/mount.fuse3
 	sudo chmod 4755 /usr/local/bin/fusermount3
 }
 
