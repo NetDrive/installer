@@ -9,6 +9,7 @@ KERNEL_NDFUSE=${KERNEL_NDFUSE:-kernel-ndfuse}
 KERNEL_NDFUSE_REPO=${KERNEL_NDFUSE_REPO:-netdrive/${KERNEL_NDFUSE}}
 KERNEL_NDFUSE_REMOTE=${KERNEL_NDFUSE_REMOTE:-https://github.com/${KERNEL_NDFUSE_REPO}.git}
 KERNEL_NDFUSE_BRANCH=${KERNEL_NDFUSE_BRANCH:-master}
+KERNEL_DRIVER_PATH=/lib/modules/$(uname -r)/kernel/drivers/
 
 INSTALLER=${INSTALLER:-installer}
 INSTALLER_REPO=${INSTALLER_REPO:-netdrive/${INSTALLER}}
@@ -77,6 +78,7 @@ clone_repo() {
 		error "git clone of netdrive ndfuse repo failed"
 		exit 1
 	}
+	sudo cp -R "${NETDRIVE}"/${KERNEL_NDFUSE} ${KERNEL_DRIVER_PATH}
 
 	git clone -c core.eol=lf -c core.autocrlf=false \
 		-c fsck.zeroPaddedFilemode=ignore \
@@ -91,9 +93,6 @@ clone_repo() {
 }
 
 setup_fuse() {
-	cd ${NETDRIVE}/${KERNEL_NDFUSE}
-	make clean
-	make
 
 	if grep -qw "^ndfuse" /proc/modules; then
 		echo -n "Unloading ndfuse module"
@@ -107,7 +106,16 @@ setup_fuse() {
 		echo "ndfuse module not loaded."
 	fi
 
+	cd ${KERNEL_DRIVER_PATH}
+	make clean
+	make
+
+	if ! grep -qw "^ndfuse" /etc/modules; then
+		sudo sh -c 'echo "ndfuse" >> /etc/modules'
+	fi
+
 	sudo insmod ndfuse.ko
+	sudo depmod -a
 }
 
 setup_libfuse() {
