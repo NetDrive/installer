@@ -78,7 +78,6 @@ clone_repo() {
 		error "git clone of netdrive ndfuse repo failed"
 		exit 1
 	}
-	sudo cp -R "${NETDRIVE}"/${KERNEL_NDFUSE} ${KERNEL_DRIVER_PATH}
 
 	git clone -c core.eol=lf -c core.autocrlf=false \
 		-c fsck.zeroPaddedFilemode=ignore \
@@ -106,13 +105,16 @@ setup_fuse() {
 		echo "ndfuse module not loaded."
 	fi
 
-	cd ${KERNEL_DRIVER_PATH}
+	cd "${NETDRIVE}/${KERNEL_NDFUSE}"
 	make clean
 	make
 
 	if ! grep -qw "^ndfuse" /etc/modules; then
 		sudo sh -c 'echo "ndfuse" >> /etc/modules'
 	fi
+
+	sudo rm -rf ${KERNEL_DRIVER_PATH}/ndfuse
+	sudo cp -R "${NETDRIVE}"/${KERNEL_NDFUSE} ${KERNEL_DRIVER_PATH}/ndfuse
 
 	sudo insmod ndfuse.ko
 	sudo depmod -a
